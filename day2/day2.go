@@ -21,12 +21,13 @@ func main() {
 		panic(err)
 	}
 
-	part1(read)
-	part2(read)
+	allGames := strings.Split(string(read), "\r\n")
+
+	part1(allGames)
+	part2(allGames)
 }
 
-func part1(read []uint8) {
-	allGames := strings.Split(string(read), "\r\n")
+func part1(allGames []string) {
 	sum := 0
 
 NewGame:
@@ -39,14 +40,13 @@ NewGame:
 
 			for _, v := range set {
 				values := strings.Split(v, " ")
-				value, color := values[0], values[1]
 
-				atoi, err := strconv.Atoi(value)
+				atoi, err := strconv.Atoi(values[0])
 				if err != nil {
 					panic(err)
 				}
 
-				if nums[color] < atoi {
+				if nums[values[1]] < atoi {
 					continue NewGame
 				}
 			}
@@ -61,8 +61,7 @@ NewGame:
 	fmt.Println(sum)
 }
 
-func part2(read []uint8) {
-	allGames := strings.Split(string(read), "\r\n")
+func part2(allGames []string) {
 	sum := 0
 
 	for _, g := range allGames {
@@ -74,15 +73,14 @@ func part2(read []uint8) {
 
 			for _, v := range set {
 				values := strings.Split(v, " ")
-				value, color := values[0], values[1]
+				color := values[1]
 
-				atoi, err := strconv.Atoi(value)
+				atoi, err := strconv.Atoi(values[0])
 				if err != nil {
 					panic(err)
 				}
 
-				v, _ := setValues[color]
-				if v < atoi {
+				if setValues[color] < atoi {
 					setValues[color] = atoi
 				}
 			}
