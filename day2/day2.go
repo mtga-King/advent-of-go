@@ -49,7 +49,6 @@ NewGame:
 				if nums[color] < atoi {
 					continue NewGame
 				}
-
 			}
 		}
 
@@ -67,8 +66,7 @@ func part2(read []uint8) {
 	sum := 0
 
 	for _, g := range allGames {
-		games := strings.Split(g, ": ")
-		_, sets := games[0], strings.Split(games[1], "; ") //gameRound
+		sets := strings.Split(strings.Split(g, ": ")[1], "; ") //gameRound
 
 		setValues := make(map[string]int)
 		for _, s := range sets {
