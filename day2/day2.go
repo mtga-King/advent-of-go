@@ -8,12 +8,6 @@ import (
 	"strings"
 )
 
-var nums = map[string]int{
-	"red":   12,
-	"green": 13,
-	"blue":  14,
-}
-
 func main() {
 	wd := filepath.Join("day2", "input.txt")
 	read, err := os.ReadFile(wd)
@@ -28,6 +22,12 @@ func main() {
 }
 
 func part1(allGames []string) {
+	nums := map[string]int{
+		"red":   12,
+		"green": 13,
+		"blue":  14,
+	}
+
 	sum := 0
 
 NewGame:
@@ -64,10 +64,15 @@ NewGame:
 func part2(allGames []string) {
 	sum := 0
 
+	nums := map[string]int{
+		"red":   0,
+		"green": 0,
+		"blue":  0,
+	}
+
 	for _, g := range allGames {
 		sets := strings.Split(strings.Split(g, ": ")[1], "; ") //gameRound
 
-		setValues := make(map[string]int)
 		for _, s := range sets {
 			set := strings.Split(s, ", ")
 
@@ -80,17 +85,13 @@ func part2(allGames []string) {
 					panic(err)
 				}
 
-				if setValues[color] < atoi {
-					setValues[color] = atoi
+				if nums[color] < atoi {
+					nums[color] = atoi
 				}
 			}
 		}
-
-		power := 1 //can't multiply by 0
-		for _, value := range setValues {
-			power *= value
-		}
-		sum += power
+		sum += nums["red"] * nums["blue"] * nums["green"]
+		nums["red"], nums["blue"], nums["green"] = 0, 0, 0
 	}
 	fmt.Println(sum)
 }
